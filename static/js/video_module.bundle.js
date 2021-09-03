@@ -44470,9 +44470,6 @@ var __webpack_exports__ = {};
   !*** ./src/video_module.js ***!
   \*****************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var core_js_modules_es6_function_bind_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es6.function.bind.js */ "./node_modules/core-js/modules/es6.function.bind.js");
@@ -44570,10 +44567,13 @@ var VideoModule = /*#__PURE__*/function (_Component) {
       //
       selectOptions: [],
       gameAllData: [],
-      selected: ""
+      selected: "",
+      value: ""
     }; //
 
     _this.selectedHandleChange = _this.selectedHandleChange.bind(_assertThisInitialized(_this));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   } // load view on start
 
@@ -44625,7 +44625,7 @@ var VideoModule = /*#__PURE__*/function (_Component) {
     key: "getSelectOptions",
     value: function () {
       var _getSelectOptions = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        var options;
+        var options, dataApiUrl, res;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -44640,8 +44640,15 @@ var VideoModule = /*#__PURE__*/function (_Component) {
                 this.setState({
                   selectOptions: options
                 });
+                dataApiUrl = "https://karmazone-4a7ed-default-rtdb.asia-southeast1.firebasedatabase.app/.json";
+                _context2.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_16___default().get(dataApiUrl);
 
-              case 2:
+              case 5:
+                res = _context2.sent;
+                console.log(res.data['Tainan']['Date']);
+
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -44695,6 +44702,72 @@ var VideoModule = /*#__PURE__*/function (_Component) {
       return selectedHandleChange;
     }()
   }, {
+    key: "handleChange",
+    value: function () {
+      var _handleChange = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(e) {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                console.log('handleChange:', e);
+                console.log('input:', e.target.value);
+                this.setState({
+                  selected: e.target.value
+                }); // this.setState({value: Number(e.target.value)+1});
+
+              case 3:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function handleChange(_x3) {
+        return _handleChange.apply(this, arguments);
+      }
+
+      return handleChange;
+    }()
+  }, {
+    key: "handleSubmit",
+    value: function () {
+      var _handleSubmit = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+        var value, dataApiUrl, res, data;
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                value = this.state.selected;
+                dataApiUrl = "/parameter";
+                _context5.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_16___default().post(dataApiUrl, {
+                  'value': value
+                });
+
+              case 4:
+                res = _context5.sent;
+                data = res.data;
+                this.setState({
+                  gameAllData: data
+                });
+                alert('您送出的是： ' + this.state.selected);
+
+              case 8:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      function handleSubmit() {
+        return _handleSubmit.apply(this, arguments);
+      }
+
+      return handleSubmit;
+    }()
+  }, {
     key: "render",
     value: function render() {
       var _this$state = this.state,
@@ -44707,13 +44780,26 @@ var VideoModule = /*#__PURE__*/function (_Component) {
         className: "row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("div", {
         className: "col-4"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement(react_select__WEBPACK_IMPORTED_MODULE_18__.default, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement(Clock, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement(react_select__WEBPACK_IMPORTED_MODULE_18__.default, {
+        className: "mb-2",
         placeholder: "\u9078\u64C7",
         options: selectOptions,
         onChange: this.selectedHandleChange
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("p", {
-        className: "text-center"
-      }, selected)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("div", {
+        className: "text-center mb-2"
+      }, selected), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("form", {
+        className: "form-group",
+        onSubmit: this.handleSubmit
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("input", {
+        type: "text",
+        className: "form-control mb-2",
+        defaultValue: this.state.value,
+        onChange: this.handleChange
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("input", {
+        type: "submit",
+        value: "\u9001\u51FA",
+        className: "btn btn-primary form-control mb-2"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("div", {
         className: "col"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("table", {
         className: "table table-striped"
@@ -44742,9 +44828,56 @@ var VideoModule = /*#__PURE__*/function (_Component) {
   }]);
 
   return VideoModule;
-}(react__WEBPACK_IMPORTED_MODULE_14__.Component);
+}(react__WEBPACK_IMPORTED_MODULE_14__.Component); // export default VideoModule;
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VideoModule);
+
+var Clock = /*#__PURE__*/function (_React$Component) {
+  _inherits(Clock, _React$Component);
+
+  var _super2 = _createSuper(Clock);
+
+  function Clock(props) {
+    var _this2;
+
+    _classCallCheck(this, Clock);
+
+    _this2 = _super2.call(this, props);
+    _this2.state = {
+      date: new Date()
+    };
+    return _this2;
+  }
+
+  _createClass(Clock, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      this.timerID = setInterval(function () {
+        return _this3.tick();
+      }, 1000);
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      clearInterval(this.timerID);
+    }
+  }, {
+    key: "tick",
+    value: function tick() {
+      this.setState({
+        date: new Date()
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("h1", null, "Hello, world!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement("h2", null, "It is ", this.state.date.toLocaleTimeString(), "."));
+    }
+  }]);
+
+  return Clock;
+}(react__WEBPACK_IMPORTED_MODULE_14__.Component);
 
 if (document.getElementById("video_module")) {
   react_dom__WEBPACK_IMPORTED_MODULE_15__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_14__.createElement(VideoModule, null), document.getElementById("video_module"));

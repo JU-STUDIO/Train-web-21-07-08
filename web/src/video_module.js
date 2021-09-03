@@ -11,10 +11,13 @@ class VideoModule extends Component {
             //
             selectOptions: [],
             gameAllData:[],
-            selected: ""
+            selected: "",
+            value: ""
         };
         //
         this.selectedHandleChange = this.selectedHandleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     // load view on start
@@ -37,6 +40,10 @@ class VideoModule extends Component {
             { value: '1', label: 'Home' }
         ]
         this.setState({ selectOptions: options });
+
+        const dataApiUrl = ("https://karmazone-4a7ed-default-rtdb.asia-southeast1.firebasedatabase.app/.json")
+        const res = await axios.get(dataApiUrl)
+        console.log(res.data['Tainan']['Date'])
     }
 
     // select Handle Change
@@ -53,6 +60,30 @@ class VideoModule extends Component {
         }
     }
 
+    async handleChange(e){
+
+        console.log('handleChange:',e);
+        console.log('input:', e.target.value);
+
+        this.setState({selected: e.target.value});
+        // this.setState({value: Number(e.target.value)+1});
+
+    }
+
+    async handleSubmit(){
+
+        const value = this.state.selected;
+
+        const dataApiUrl = ("/parameter");
+        const res = await axios.post(dataApiUrl, { 'value': value });
+        const data = res.data;
+
+        this.setState({ gameAllData: data });
+
+        alert('您送出的是： ' + this.state.selected);
+
+    }
+
     render() {
 
         const {
@@ -67,12 +98,21 @@ class VideoModule extends Component {
                     <div className="row">
 
                         <div className="col-4">
+                        <Clock ></Clock>
                             <Select
+                            className="mb-2"
                                 placeholder="選擇"
                                 options={selectOptions}
                                 onChange={this.selectedHandleChange}
                             />
-                            <p className="text-center">{selected}</p>
+
+                            <p className="text-center mb-2">{selected}</p>
+                            
+                            <form className="form-group" onSubmit={this.handleSubmit}>
+                                <input type="text" className="form-control mb-2" defaultValue={this.state.value} onChange={this.handleChange} />
+                                <input type="submit" value="送出" className="btn btn-primary form-control mb-2" />
+                            </form>
+
                         </div>
 
                         <div className="col">
@@ -108,7 +148,40 @@ class VideoModule extends Component {
         );
     }
 }
-export default VideoModule;
+// export default VideoModule;
+
+class Clock extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {date: new Date()};
+    }
+  
+    componentDidMount() {
+      this.timerID = setInterval(
+        () => this.tick(),
+        1000
+      );
+    }
+  
+    componentWillUnmount() {
+      clearInterval(this.timerID);
+    }
+  
+    tick() {
+      this.setState({
+        date: new Date()
+      });
+    }
+  
+    render() {
+      return (
+        <div>
+          <h1>Hello, world!</h1>
+          <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+        </div>
+      );
+    }
+  }
 
 if (document.getElementById("video_module")) {
     ReactDOM.render(<VideoModule />, document.getElementById("video_module"));
