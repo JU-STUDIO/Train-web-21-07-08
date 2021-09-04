@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Select from 'react-select';
+import Clock from './clock.jsx'
 import axios from "axios";
 import css from "../scss/video_module.scss";
 
@@ -40,10 +41,6 @@ class VideoModule extends Component {
             { value: '1', label: 'Home' }
         ]
         this.setState({ selectOptions: options });
-
-        const dataApiUrl = ("https://karmazone-4a7ed-default-rtdb.asia-southeast1.firebasedatabase.app/.json")
-        const res = await axios.get(dataApiUrl)
-        console.log(res.data['Tainan']['Date'])
     }
 
     // select Handle Change
@@ -97,9 +94,9 @@ class VideoModule extends Component {
                 <div className="container">
                     <div className="row">
 
-                        <div className="col-4">
-                        <Clock ></Clock>
-                            <Select
+                        <div className="col-md">
+                        <Clock />
+                            {/* <Select
                             className="mb-2"
                                 placeholder="選擇"
                                 options={selectOptions}
@@ -111,17 +108,17 @@ class VideoModule extends Component {
                             <form className="form-group" onSubmit={this.handleSubmit}>
                                 <input type="text" className="form-control mb-2" defaultValue={this.state.value} onChange={this.handleChange} />
                                 <input type="submit" value="送出" className="btn btn-primary form-control mb-2" />
-                            </form>
+                            </form> */}
 
                         </div>
 
-                        <div className="col">
+                        {/* <div className="col">
                             <table className="table table-striped">
                                 <thead className="text-center">
                                     <tr>
                                         <th scope="col">局數</th>
-                                        <th scope="col">打者</th>
                                         <th scope="col">投手</th>
+                                        <th scope="col">打者</th>
                                         <th scope="col">球種</th>
                                         <th scope="col">球速</th>
                                         <th scope="col">結果</th>
@@ -140,7 +137,7 @@ class VideoModule extends Component {
                                     ))}
                                 </tbody>
                             </table>
-                        </div>
+                        </div> */}
 
                     </div>
                 </div>
@@ -149,39 +146,6 @@ class VideoModule extends Component {
     }
 }
 // export default VideoModule;
-
-class Clock extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {date: new Date()};
-    }
-  
-    componentDidMount() {
-      this.timerID = setInterval(
-        () => this.tick(),
-        1000
-      );
-    }
-  
-    componentWillUnmount() {
-      clearInterval(this.timerID);
-    }
-  
-    tick() {
-      this.setState({
-        date: new Date()
-      });
-    }
-  
-    render() {
-      return (
-        <div>
-          <h1>Hello, world!</h1>
-          <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
-        </div>
-      );
-    }
-  }
 
 if (document.getElementById("video_module")) {
     ReactDOM.render(<VideoModule />, document.getElementById("video_module"));
