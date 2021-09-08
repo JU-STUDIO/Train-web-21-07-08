@@ -25,6 +25,7 @@ class Clock extends React.Component {
       baseballField: "",
       state: "",
       tempID: "",
+      baseballFieldTitleStyle: { color: 'black'},
 
       selectOptions: [],
       selected: ""
@@ -86,8 +87,18 @@ class Clock extends React.Component {
     const baseballField = selected;
     this.setState({baseballField:baseballField});
 
+    const style = {
+      color: 'black'
+    }
+    this.setState({baseballFieldTitleStyle:style})
+
     // console.log(res.data['Tianmu'])
     if (res.data[baseballField]['Clip_Id'] !== this.state.tempID){
+
+      const style = {
+        color: 'blue'
+      }
+      this.setState({baseballFieldTitleStyle:style})
       
       if (res.data[baseballField]['E_Angle'] == 0.0) {
         this.setState( {state: "未出棒"} );
@@ -132,7 +143,8 @@ class Clock extends React.Component {
 
   render() {
     const {
-      selectOptions
+      selectOptions,
+      baseballFieldTitleStyle
     } = this.state;
 
     return (
@@ -147,7 +159,7 @@ class Clock extends React.Component {
           </div>
         </div>
         <div className="row card">
-          <h2 className="card-header text-center">{this.state.baseballField} RealTimeData</h2>
+          <h2 className="card-header text-center" style={baseballFieldTitleStyle}>{this.state.baseballField} RealTimeData</h2>
           {/* <ul className="card-body text-left">
               <li>資料日期: {this.state.Date}</li>
               <li>資料時間: {this.state.Time}</li>

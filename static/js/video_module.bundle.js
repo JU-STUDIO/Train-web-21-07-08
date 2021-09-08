@@ -4031,6 +4031,9 @@ var Clock = /*#__PURE__*/function (_React$Component) {
       baseballField: "",
       state: "",
       tempID: "",
+      baseballFieldTitleStyle: {
+        color: 'black'
+      },
       selectOptions: [],
       selected: ""
     };
@@ -4152,7 +4155,8 @@ var Clock = /*#__PURE__*/function (_React$Component) {
     key: "tick",
     value: function () {
       var _tick = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-        var selected, dataApiUrl, res, baseballField;
+        var selected, dataApiUrl, res, baseballField, style, _style;
+
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -4170,9 +4174,22 @@ var Clock = /*#__PURE__*/function (_React$Component) {
                 baseballField = selected;
                 this.setState({
                   baseballField: baseballField
+                });
+                style = {
+                  color: 'black'
+                };
+                this.setState({
+                  baseballFieldTitleStyle: style
                 }); // console.log(res.data['Tianmu'])
 
                 if (res.data[baseballField]['Clip_Id'] !== this.state.tempID) {
+                  _style = {
+                    color: 'blue'
+                  };
+                  this.setState({
+                    baseballFieldTitleStyle: _style
+                  });
+
                   if (res.data[baseballField]['E_Angle'] == 0.0) {
                     this.setState({
                       state: "未出棒"
@@ -4241,7 +4258,7 @@ var Clock = /*#__PURE__*/function (_React$Component) {
                   });
                 }
 
-              case 9:
+              case 11:
               case "end":
                 return _context3.stop();
             }
@@ -4258,7 +4275,9 @@ var Clock = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var selectOptions = this.state.selectOptions;
+      var _this$state = this.state,
+          selectOptions = _this$state.selectOptions,
+          baseballFieldTitleStyle = _this$state.baseballFieldTitleStyle;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_13__.createElement("div", {
         className: "container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_13__.createElement("div", {
@@ -4272,7 +4291,8 @@ var Clock = /*#__PURE__*/function (_React$Component) {
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_13__.createElement("div", {
         className: "row card"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_13__.createElement("h2", {
-        className: "card-header text-center"
+        className: "card-header text-center",
+        style: baseballFieldTitleStyle
       }, this.state.baseballField, " RealTimeData"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_13__.createElement("div", {
         className: "table-responsive-sm table-responsive-md table-responsive-lg"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_13__.createElement("table", {
